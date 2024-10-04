@@ -26,7 +26,7 @@ func (e NotPointerError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"Provided value %+v (%T) is not a pointer of the expected type.",
+		"Provided value %#+v (%T) is not a valid pointer of the expected type.",
 		e.Value,
 		e.Value,
 	)

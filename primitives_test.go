@@ -127,3 +127,30 @@ func TestString(t *testing.T) {
 		})
 	}
 }
+
+func TestRune(t *testing.T) {
+	zeroRune := zeroValue[rune]('a')
+
+	tests := []testPrimitivesStruct[rune]{
+		{"Valid rune pointer", createPointer('a'), 'a'},
+		{"Valid rune pointer", createPointer('9'), '9'},
+		{"Invalid rune pointer", 'a', zeroRune},
+		{"Invalid rune pointer", '9', zeroRune},
+		{"Invalid value", "true", zeroRune},
+		{"Invalid invalid structured value", struct{ name string }{}, zeroRune},
+	}
+
+	for _, testCases := range tests {
+		t.Run(testCases.name, func(t *testing.T) {
+			got, err := Rune(testCases.value)
+			if got != testCases.expected {
+				if expectedErr := NewNotPointerError(got); err != nil && reflect.TypeOf(err) != reflect.TypeOf(expectedErr) {
+					t.Errorf("Expected error not returned. Expected: %v; Got: %v", expectedErr, err)
+					return
+				}
+
+				t.Errorf("Expected value not returned. Expected: %v; Got: %v", testCases.expected, got)
+			}
+		})
+	}
+}

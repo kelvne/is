@@ -44,3 +44,10 @@ func Int(value interface{}) (int, error) {
 func String(value interface{}) (string, error) {
 	return Generic[string](value)
 }
+
+// Rune validates if the provided pointer is to a rune,
+// and if it is, it returns the value.
+// Otherwise, it returns an NotPointerError.
+func Rune(value interface{}) (rune, error) {
+	return Generic[rune](value)
+}

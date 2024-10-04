@@ -77,6 +77,7 @@ func TestInt(t *testing.T) {
 	zeroInt := zeroValue[int](int(0))
 
 	tests := []testPrimitivesStruct[int]{
+		{"Valid integer pointer", createPointer(0), 0},
 		{"Valid integer pointer", createPointer(5), 5},
 		{"Valid integer pointer", createPointer(1024), 1024},
 		{"Invalid integer pointer", 5, zeroInt},
@@ -88,6 +89,33 @@ func TestInt(t *testing.T) {
 	for _, testCases := range tests {
 		t.Run(testCases.name, func(t *testing.T) {
 			got, err := Int(testCases.value)
+			if got != testCases.expected {
+				if expectedErr := NewNotPointerError(got); err != nil && reflect.TypeOf(err) != reflect.TypeOf(expectedErr) {
+					t.Errorf("Expected error not returned. Expected: %v; Got: %v", expectedErr, err)
+					return
+				}
+
+				t.Errorf("Expected value not returned. Expected: %v; Got: %v", testCases.expected, got)
+			}
+		})
+	}
+}
+
+func TestString(t *testing.T) {
+	zeroString := zeroValue[string]("")
+
+	tests := []testPrimitivesStruct[string]{
+		{"Valid string pointer", createPointer(""), ""},
+		{"Valid string pointer", createPointer("abcsd"), "abcsd"},
+		{"Invalid string pointer", "", zeroString},
+		{"Invalid string pointer", "abcsd", zeroString},
+		{"Invalid value", "true", zeroString},
+		{"Invalid invalid structured value", struct{ name string }{}, zeroString},
+	}
+
+	for _, testCases := range tests {
+		t.Run(testCases.name, func(t *testing.T) {
+			got, err := String(testCases.value)
 			if got != testCases.expected {
 				if expectedErr := NewNotPointerError(got); err != nil && reflect.TypeOf(err) != reflect.TypeOf(expectedErr) {
 					t.Errorf("Expected error not returned. Expected: %v; Got: %v", expectedErr, err)

@@ -28,8 +28,8 @@ func ExampleGeneric() {
 	fmt.Println(nilValue, err)
 
 	// Output: {example} <nil>
-	// {} Provided value other value (string) is not a pointer of the expected type.
-	// {} Provided value <nil> (*is_test.sampleStruct) is not a pointer of the expected type.
+	// {} Provided value "other value" (string) is not a valid pointer of the expected type.
+	// {} Provided value (*is_test.sampleStruct)(nil) (*is_test.sampleStruct) is not a valid pointer of the expected type.
 	// {} Provided value is nil
 }
 
@@ -44,7 +44,7 @@ func ExampleBool() {
 	fmt.Println(value, err)
 
 	// Output: true <nil>
-	// false Provided value other (string) is not a pointer of the expected type.
+	// false Provided value "other" (string) is not a valid pointer of the expected type.
 }
 
 func ExampleString() {
@@ -55,10 +55,10 @@ func ExampleString() {
 	fmt.Println(value, err)
 
 	value, err = is.String(123)
-	fmt.Println(value, err)
+	fmt.Printf("%#+v %v", value, err)
 
 	// Output: example string <nil>
-	//  Provided value 123 (int) is not a pointer of the expected type.
+	// "" Provided value 123 (int) is not a valid pointer of the expected type.
 }
 
 func ExampleInt() {
@@ -72,7 +72,7 @@ func ExampleInt() {
 	fmt.Println(value, err)
 
 	// Output: 123 <nil>
-	// 0 Provided value abc (string) is not a pointer of the expected type.
+	// 0 Provided value "abc" (string) is not a valid pointer of the expected type.
 }
 
 func ExampleByte() {
@@ -86,5 +86,5 @@ func ExampleByte() {
 	fmt.Println(value, err)
 
 	// Output: 241 <nil>
-	// 0 Provided value oops (string) is not a pointer of the expected type.
+	// 0 Provided value "oops" (string) is not a valid pointer of the expected type.
 }

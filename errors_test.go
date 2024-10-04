@@ -29,7 +29,7 @@ func TestNewNotPointerError(t *testing.T) {
 
 			if testCase != nil {
 				expectedMessage = fmt.Sprintf(
-					"Provided value %+v (%T) is not a pointer of the expected type.",
+					"Provided value %#+v (%T) is not a valid pointer of the expected type.",
 					err.Value,
 					err.Value,
 				)

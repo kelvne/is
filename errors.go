@@ -25,5 +25,9 @@ func (e NotPointerError) Error() string {
 		return "Provided value is nil"
 	}
 
-	return fmt.Sprintf("Provided value (%T) is not a pointer: %+v", e.Value, e.Value)
+	return fmt.Sprintf(
+		"Provided value %+v (%T) is not a pointer of the expected type.",
+		e.Value,
+		e.Value,
+	)
 }

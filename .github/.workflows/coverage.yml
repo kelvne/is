@@ -1,0 +1,24 @@
+name: Check coverage and generate badge
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  coverage:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setting up Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: 1.23
+
+      - name: Testing and generating coverage
+        run: go test ./... -coverprofile=./cover.out -covermode=atomic -coverpkg=./...
+        with:
+          config: ./.testcoverage.yml
+          git-token: ${{ github.ref_name == 'main' && secrets.GITHUB_TOKEN || '' }}
+          git-branch: badges

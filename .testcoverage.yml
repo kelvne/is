@@ -1,0 +1,8 @@
+profile: cover.out
+
+local-prefix: "github.com/kelvne/is"
+
+threshold:
+  file: 70
+  package: 80
+  total: 95

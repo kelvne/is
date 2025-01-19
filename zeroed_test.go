@@ -1,10 +1,13 @@
 package is
 
 import (
+	"fmt"
 	"testing"
 )
 
 func TestIntZero(t *testing.T) {
+	t.Parallel()
+
 	cases := []*int{
 		nil,
 		new(int),
@@ -19,13 +22,17 @@ func TestIntZero(t *testing.T) {
 	}
 
 	for i, c := range cases {
-		if got := IntZero(c); got != expected[i] {
-			t.Errorf("Expected %d, got %d", expected[i], got)
-		}
+		t.Run(fmt.Sprintf("expects %v to return the expected value %d", c, expected[i]), func(t *testing.T) {
+			if got := IntZero(c); got != expected[i] {
+				t.Errorf("Expected %d, got %d", expected[i], got)
+			}
+		})
 	}
 }
 
 func TestStringZero(t *testing.T) {
+	t.Parallel()
+
 	cases := []*string{
 		nil,
 		new(string),
@@ -42,8 +49,10 @@ func TestStringZero(t *testing.T) {
 	}
 
 	for i, c := range cases {
-		if got := StringZero(c); got != expected[i] {
-			t.Errorf("Expected %s, got %s", expected[i], got)
-		}
+		t.Run(fmt.Sprintf("expects %v to return the expected value %s", c, expected[i]), func(t *testing.T) {
+			if got := StringZero(c); got != expected[i] {
+				t.Errorf("expected %s, got %s", expected[i], got)
+			}
+		})
 	}
 }
